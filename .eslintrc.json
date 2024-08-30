@@ -1,0 +1,53 @@
+{
+	"env": {
+		"browser": true,
+		"commonjs": true,
+		"es2021": true
+	},
+	"extends": "eslint:recommended",
+	"overrides": [],
+	"parserOptions": {
+		"ecmaVersion": "latest"
+	},
+	"rules": {
+		"array-bracket-spacing": ["error", "always", { "singleValue": true, "objectsInArrays": true, "arraysInArrays": true }],
+		"comma-spacing": ["error", { "before": false, "after": true }],
+		"object-curly-spacing": ["error", "always"],
+		"key-spacing": ["error", { "beforeColon": false, "afterColon": true }], // Enforce spacing around colons in object literals
+		"no-irregular-whitespace": 0,
+		"semi": ["error", "always"],
+		"indent": ["error", "tab"],
+		"no-const-assign": "error",
+		"no-dupe-keys": "warn",
+		"no-unreachable": "error",
+		"camelcase": "warn",
+		// "max-lines": [ "error", 1500 ],
+		"no-tabs": "off",
+		"one-var": "off",
+		"object-curly-newline": "off",
+		"padded-blocks": "off",
+		"space-before-function-paren": "off",
+		"no-var": "error",
+		"arrow-spacing": "error",
+		"no-prototype-builtins": "off",
+		"no-undef": "off",
+		"no-cond-assign": "off",
+		"no-constant-condition": "off",
+		"no-console": "warn",
+		"no-debugger": "warn",
+		"array-callback-return": "error",
+		"no-eval": "error",
+		"no-implied-eval": "error",
+		"no-throw-literal": "error",
+		"no-shadow": "warn",
+		"eqeqeq": "warn",
+		"no-unused-vars": ["error", { "args": "after-used", "ignoreRestSiblings": true }],
+		"quotes": ["error", "single"],
+		"no-mixed-requires": "error",
+		"no-new-require": "error",
+		"arrow-parens": ["error", "always"],
+		"prefer-const": "error",
+		"max-len": ["error", { "code": 500 }],
+		"eol-last": "off"
+	}
+}
