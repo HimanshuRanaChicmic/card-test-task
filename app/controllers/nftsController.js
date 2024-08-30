@@ -4,14 +4,10 @@
 const { createSuccessResponse, createErrorResponse } = require('../helpers');
 
 const { dbService } = require('../services');
-const { transactionsModel, bomDetailsViewModel, blockChainDataModel } = require('../models');
+const { blockChainDataModel } = require('../models');
 const CONFIG = require('../../config');
 const { MESSAGES, ERROR_TYPES } = require('../utils/constants');
-const CONSTANTS = require('../utils/constants');
 const { storeImageOnIPFS, pinJSONToIPFS, callThirdPartyAPI, validateEthereumAddress } = require('../utils/utils');
-
-const { ethers } = require('ethers');
-const { Model } = require('mongoose');
 
 
 /** ************************************************
@@ -25,6 +21,7 @@ const nftsController = {};
  */
 nftsController.mintNFT = async (payload) => {
 
+	// validate if owneraddress is valid or not
 	const isWalletAddressValid = await validateEthereumAddress(payload.ownerAddress);
 
 	if(!isWalletAddressValid) throw createErrorResponse(MESSAGES.INVALID_WALLET_ADDRESS, ERROR_TYPES.BAD_REQUEST);
@@ -67,35 +64,6 @@ nftsController.mintNFT = async (payload) => {
 		throw createErrorResponse(MESSAGES.ERROR_CREATING_IPFS, ERROR_TYPES.BAD_REQUEST);
 	}
 
-
-	// const data = JSON.stringify({
-	// 	'assets': [
-	// 		// eslint-disable-next-line no-mixed-spaces-and-tabs
-	// 		{
-	// 			'reference_id': tokenId.toString(),
-	// 			'owner_address': payload.ownerAddress,
-	// 			'metadata': {
-	// 				'name': payload.title,
-	// 				'description': payload.description,
-	// 				'image': 'https://clashofhams.com/images/1',
-	// 				'external_url': 'https://clashofhams.com',
-	// 				'attributes': [
-	// 					{
-	// 						'trait_type': 'Background',
-	// 						'value': 'Desert'
-	// 					},
-	// 					{
-	// 						'trait_type': 'Level',
-	// 						'value': '1'
-	// 					}
-	// 				]
-	// 			}
-	// 		}
-	// 	]
-	// });
-
-	const metaDataUri = `${CONFIG.IPFS.IPFS_DOMAIN_URL}/${metaDataResponse.IpfsHash}`;
-
 	await callThirdPartyAPI.post({
 		API: `${CONFIG.IMMUTABLE_BASE_URL}/collections/0x988018096f15cbb70577310cff2164c7af457499/nfts/mint-requests`,
 		DATA: {
@@ -135,6 +103,7 @@ nftsController.mintNFT = async (payload) => {
  */
 nftsController.getUserNfts = async (payload) => {
 
+	// validate if owneraddress is valid or not
 	const isWalletAddressValid = await validateEthereumAddress(payload.walletAddress);
 
 	if(!isWalletAddressValid) throw createErrorResponse(MESSAGES.INVALID_WALLET_ADDRESS, ERROR_TYPES.BAD_REQUEST);
@@ -153,7 +122,4 @@ nftsController.getUserNfts = async (payload) => {
 };
 
 
-
-
-// nftsController.mintNft();
 module.exports = nftsController;
