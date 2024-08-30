@@ -44,6 +44,7 @@ module.exports = {
 	TRANSACTION_ALREADY_IN_PROCESS: 'Transaction already in process corresponding to this identifier.',
 	INVALID_IMAGE_URL: 'Invalid image url.',
 	INVALID_WALLET_ADDRESS: 'Invalid wallet address.',
+	IPFS_HASH_ALREADY_CREATED: 'IPFS hash with this imageUrl already created.',
 	ERROR_CREATING_IPFS: 'Error in creating ipfs hash.',
 	TRANSACTION_ALREADY_EXISTS: 'Transaction already exists for this identifier.',
 	WALLET_ADDRESS_NOT_BINDED: 'Sender account is not binded with private key.',

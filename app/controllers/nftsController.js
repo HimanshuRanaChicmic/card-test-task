@@ -64,29 +64,34 @@ nftsController.mintNFT = async (payload) => {
 		throw createErrorResponse(MESSAGES.ERROR_CREATING_IPFS, ERROR_TYPES.BAD_REQUEST);
 	}
 
-	await callThirdPartyAPI.post({
-		API: `${CONFIG.IMMUTABLE_BASE_URL}/collections/0x988018096f15cbb70577310cff2164c7af457499/nfts/mint-requests`,
-		DATA: {
-			assets: [
-				{
-					reference_id: metaDataResponse.IpfsHash,
-					owner_address: payload.ownerAddress,
-					metaData: {
-						'name': payload.title,
-						'description': payload.description,
-						'image': 'https://clashofhams.com/images/1',
-						'external_url': 'https://clashofhams.com',
-
+	try {
+		const response = (await callThirdPartyAPI.post({
+			API: `${CONFIG.IMMUTABLE_BASE_URL}/collections/0x988018096f15cbb70577310cff2164c7af457499/nfts/mint-requests`,
+			DATA: {
+				assets: [
+					{
+						reference_id: metaDataResponse.IpfsHash,
+						owner_address: payload.ownerAddress,
+						metaData: {
+							'name': payload.title,
+							'description': payload.description,
+							'image': 'https://clashofhams.com/images/1',
+							'external_url': 'https://clashofhams.com',
+	
+						}
 					}
-				}
-			]
-		},
-		HEADER: {
-			'accept': 'application/json',
-			'Content-Type': 'application/json',
-			'x-immutable-api-key': CONFIG.IMMUTABLE_API_KEY
-		},
-	});
+				]
+			},
+			HEADER: {
+				'accept': 'application/json',
+				'Content-Type': 'application/json',
+				'x-immutable-api-key': CONFIG.IMMUTABLE_API_KEY
+			},
+		}));
+	} catch(err) {
+		throw createErrorResponse(MESSAGES.IPFS_HASH_ALREADY_CREATED, ERROR_TYPES.BAD_REQUEST);
+	
+	}
 
 	await dbService.findOneAndUpdate(blockChainDataModel, {}, { latestBId: tokenId });
 
