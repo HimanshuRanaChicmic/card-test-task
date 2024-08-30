@@ -25,6 +25,10 @@ const nftsController = {};
  */
 nftsController.mintNFT = async (payload) => {
 
+	const isWalletAddressValid = await validateEthereumAddress(payload.ownerAddress);
+
+	if(!isWalletAddressValid) throw createErrorResponse(MESSAGES.INVALID_WALLET_ADDRESS, ERROR_TYPES.BAD_REQUEST);
+
 	const blockChainData = await dbService.findOne(blockChainDataModel, { });
 
 	const tokenId = blockChainData.latestBId + 1;
